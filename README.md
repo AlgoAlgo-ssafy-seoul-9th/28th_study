@@ -93,7 +93,25 @@ print(ans)
 ### [영준](./행렬%20곱셈%20순서/영준.py)
 
 ```py
+# MCM(Matrix Chain Multipilication 알고리즘)
+# 행렬을 곱할 때 MCM으로 결합법칙을 어떻게 적용할 지 찾고, 그 결과대로 곱하는게 평균시간복잡도가 낮다고 함
+# 보통은 결합 위치(k)를 저장하지 않고 곱셈의 최소 횟수까지만 확인하는 문제만 나옴.
+N = int(input())
+A = [0]*(N+1)   # 행열크기
+for i in range(N):
+    A[i], A[i+1] = map(int, input().split())  # 행렬 크기 저장
 
+D = [[0]*(N+1) for _ in range(N+1)]            # Dij : Ai부터 Aj까지 최소 곱셈횟수
+
+for l in range(1, N):                          # 곱하는 행렬의 개수
+    for i in range(1, N-l+1):                  # i 곱하는 맨 앞 행렬
+        j = i+l                                # j 맨 마지막 행렬 
+        min_v = 1000000000
+        for k in range(i, j):                  # (Ai...Ak)(Ak+1...Aj) 결합법칙 적용하는 왼쪽 괄호의 끝 행렬번호
+            min_v = min(min_v, D[i][k]+D[k+1][j]+A[i-1]*A[k]*A[j])     # 결합 위치를 바꿨을 때 최소 곱셈 횟수 갱신
+        D[i][j] = min_v                        #  Ai...Aj까지 최소 곱셈 횟수
+
+print(D[1][N])
 ```
 
 ## [nxm 표 이동](https://www.codetree.ai/problems/move-n-x-m-table-9/description)
