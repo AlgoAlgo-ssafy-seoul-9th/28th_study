@@ -94,8 +94,9 @@ print(ans)
 
 ```py
 # MCM(Matrix Chain Multipilication 알고리즘)
+# A1x...AN까지 행렬을 곱할 때 최소 곱셈 횟수를 구하는 알고리즘
 # 행렬을 곱할 때 MCM으로 결합법칙을 어떻게 적용할 지 찾고, 그 결과대로 곱하는게 평균시간복잡도가 낮다고 함
-# 보통은 결합 위치(k)를 저장하지 않고 곱셈의 최소 횟수까지만 확인하는 문제만 나옴.
+# 보통은 결합 위치(k)를 저장하지 않고 곱셈의 최소 횟수를 찾는는 문제만 나옴.
 N = int(input())
 A = [0]*(N+1)   # 행열크기
 for i in range(N):
@@ -103,7 +104,7 @@ for i in range(N):
 
 D = [[0]*(N+1) for _ in range(N+1)]            # Dij : Ai부터 Aj까지 최소 곱셈횟수
 
-for l in range(1, N):                          # 곱하는 행렬의 개수
+for l in range(1, N):                          # 곱셈 횟수
     for i in range(1, N-l+1):                  # i 곱하는 맨 앞 행렬
         j = i+l                                # j 맨 마지막 행렬 
         min_v = 1000000000
