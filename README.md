@@ -202,13 +202,102 @@ else:
 ### [성구](./nxm%20표%20이동%20/성구.py)
 
 ```py
+import sys
+from collections import deque
+input = sys.stdin.readline
 
+N, M = map(int, input().split())
+
+field = tuple(tuple(map(int, input().split())) for _ in range(N))
+
+def bfs():
+    que = deque([(0,0,field[0][0])])  
+    visited = [[[0,0] for _ in range(M)] for _ in range(N)]  
+    visited[0][0][field[0][0]] = 1
+    while que:
+        i, j, is_visit = que.popleft()
+        if i == N-1 and j == M-1:
+            return visited[i][j][is_visit]
+        
+        for di, dj in [(1,0), (0,1), (-1,0), (0,-1)]:
+            ni,nj = i+di, j+dj
+            if 0 <= ni < N and 0 <= nj < M:
+                if not visited[ni][nj][is_visit]:
+                    if is_visit:
+                        if not field[ni][nj]:
+                            visited[ni][nj][1] = visited[i][j][1] + 1
+                            que.append((ni,nj,1))
+                    else:
+                        visited[ni][nj][field[ni][nj]] = visited[i][j][0] + 1
+                        que.append((ni,nj,field[ni][nj]))
+    return -1
+
+print(bfs())
 ```
 
 ### [영준](./nxm%20표%20이동%20/영준.py)
 
 ```py
+# 난 왜 이렇게 복잡하게...
+from collections import deque
 
+def bfs(i, j, visited):
+    q = deque()
+    q.append((i,j))
+    #visited= [[0]*m for _ in range(n)]
+    visited[i][j] = 1
+    while q:
+        i, j = q.popleft()
+
+        for di, dj in [[0,1],[1,0],[0,-1],[-1,0]]:
+            ni, nj = i+di, j+dj
+            if 0<=ni<n and 0<=nj<m and arr[ni][nj]==0 and visited[ni][nj]==0:
+                q.append((ni, nj))
+                visited[ni][nj] = visited[i][j] + 1
+
+di = [0,1,0,-1]
+dj = [1,0,-1,0]
+
+
+n, m = map(int, input().split())
+arr = [list(map(int, input().split())) for _ in range(n)]
+visited1 = [[0]*m for _ in range(n)]
+visited2 = [[0]*m for _ in range(n)]
+
+flag = 2
+if arr[0][0]+arr[n-1][m-1] == 1: # 출발 또는 도착이 벽이면
+    arr[0][0] = arr[n-1][m-1] = 0
+    flag = 1
+elif arr[0][0]+arr[n-1][m-1] == 2: # 모두 1이면 이동 불가
+    flag = 0
+min_v = 1000000
+if flag:
+    bfs(0, 0, visited1)         # 좌상단 시작
+    if visited1[n-1][m-1] != 0:
+        min_v = visited1[n-1][m-1]
+    if flag==2:
+        bfs(0, 0, visited1)  # 좌상단 시작
+        bfs(n-1, m-1, visited2)     # 우하단 시작
+
+
+        if visited1[n-1][m-1] != 0:     # 우하단 도착 가능한 경우
+            miv_v = visited1[n-1][m-1]      # 기둥을 그대로 둔 최소길이
+        for i in range(n):
+            for j in range(m):
+                if arr[i][j]==1:    # 벽을 사이에 두고 좌상단, 우하단 시작이 만나고 (같은자리 x) 벽이 없으면 최소가 되는 경우를 찾기
+                    for k in range(4):
+                        for l in range(4):
+                            if k != l:
+                                ki, kj = i+di[k], j+dj[k]
+                                li, lj = i+di[l], j+dj[l]
+                                if 0<=ki<n and 0<=kj<m and 0<=li<n and 0<=lj<m and arr[ki][kj]+arr[li][lj]==0:
+                                    if visited1[ki][kj]*visited2[li][lj] != 0: # 탐색가능한 칸에 한해
+                                        if min_v > visited1[ki][kj] + visited2[li][lj] + 1:
+                                            min_v = visited1[ki][kj] + visited2[li][lj] + 1
+
+if min_v==1000000:
+    min_v = -1
+print(min_v)
 ```
 
 ## [코드트리 음식점](https://www.codetree.ai/problems/codetree-restaurant/description)
