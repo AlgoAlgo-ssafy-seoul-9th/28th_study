@@ -37,6 +37,32 @@
 
 <br/>
 
+## [책 나눠주기](https://www.acmicpc.net/problem/9576)
+
+### [민웅](/책%20나눠주기/민웅.py)
+
+```py
+
+```
+
+### [상미](/책%20나눠주기/상미.py)
+
+```py
+
+```
+
+### [성구](/책%20나눠주기/성구.py)
+
+```py
+
+```
+
+### [영준](/책%20나눠주기/영준.py)
+
+```py
+
+```
+
 </details>
 
 <br/><br/>
@@ -106,7 +132,7 @@ D = [[0]*(N+1) for _ in range(N+1)]            # Dij : Ai부터 Aj까지 최소 
 
 for l in range(1, N):                          # 곱셈 횟수
     for i in range(1, N-l+1):                  # i 곱하는 맨 앞 행렬
-        j = i+l                                # j 맨 마지막 행렬 
+        j = i+l                                # j 맨 마지막 행렬
         min_v = 1000000000
         for k in range(i, j):                  # (Ai...Ak)(Ak+1...Aj) 결합법칙 적용하는 왼쪽 괄호의 끝 행렬번호
             min_v = min(min_v, D[i][k]+D[k+1][j]+A[i-1]*A[k]*A[j])     # 결합 위치를 바꿨을 때 최소 곱셈 횟수 갱신
@@ -146,7 +172,7 @@ while q:
         if cnt < ans:
             ans = cnt
         break
-    
+
     for d in dxy:
         nx = x + d[0]
         ny = y + d[1]
@@ -202,14 +228,14 @@ for _ in range(N):
         menus[food] += 1
     else:
         menus[food] = 1
-    
+
     if menus[food] >= K:
         if ans == -1:
             ans = food
         else:
             if food < ans:
                 ans = food
-    
+
     print(ans)
 ```
 
