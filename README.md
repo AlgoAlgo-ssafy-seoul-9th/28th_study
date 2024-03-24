@@ -75,7 +75,31 @@ for _ in range(T):
 ### [성구](/책%20나눠주기/성구.py)
 
 ```py
+# 9576 책 나눠주기
+import sys
+input = sys.stdin.readline
 
+
+def main():
+    _, M = map(int, input().split())
+    orders = sorted(list(tuple(map(int, input().split())) for _ in range(M)), key=lambda x:(x[1], x[0]))
+    visited = set()
+    cnt = 0
+    for i in range(M):
+        for j in range(orders[i][0]-1, orders[i][1]):
+            if j in visited:
+                continue
+            visited.add(j)
+            cnt += 1
+            break
+    print(cnt)
+    
+    return
+
+
+if __name__ == "__main__":
+    for _ in range(int(input())):
+        main()
 ```
 
 ### [영준](/책%20나눠주기/영준.py)
