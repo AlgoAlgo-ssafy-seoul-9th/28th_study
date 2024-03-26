@@ -566,6 +566,10 @@ for _ in range(N):
 
 ```
 
+</details>
+
+<br/><br/>
+
 # 알고리즘 설명
 
 <details markdown="1">
