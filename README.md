@@ -43,7 +43,7 @@ for i in range(K):
                     break
                 if appliances[j] in tmp_set:
                     tmp_set.remove(appliances[j])
-                    
+
             change = tmp_set.pop()
             using_app.remove(change)
             using_app.add(tmp)
@@ -110,7 +110,36 @@ print(ans)
 ### [상미](/멀티탭%20스케줄링/상미.py)
 
 ```py
+import sys
+input = sys.stdin.readline
 
+N, K = map(int, input().split())
+lst = list(map(int, input().split()))
+tmp = []
+cnt = 0
+for l in range(K):
+    if len(tmp) < N and lst[l] not in tmp:    # 멀티탭 빈 곳 있으면
+        tmp.append(lst[l])
+        continue
+
+    if lst[l] in tmp:        # 이미 해당 코드 꽂혀 있으면
+        continue
+    else:
+        most_far_num = 0
+        max_dist = -1
+        for plug in tmp:
+            rest = lst[l+1:]
+            if plug in rest:        # 남은 코드 번호 중 제일 멀리 있는 걸 뻄
+                if rest.index(plug) > max_dist:
+                    max_dist = rest.index(plug)
+                    most_far_num = plug
+            else:           # 더 이상 이 코드 안 나오면
+                max_dist = 101
+                most_far_num = plug
+        tmp.remove(most_far_num)
+        cnt += 1
+        tmp.append(lst[l])
+print(cnt)
 ```
 
 ### [성구](/멀티탭%20스케줄링/성구.py)
@@ -123,7 +152,7 @@ input = sys.stdin.readline
 
 def main():
     N, K = map(int, input().split())
-    plug = [0] * N  # 플러그 
+    plug = [0] * N  # 플러그
     que = tuple(map(int, input().split()))
     cnt = 0  # 뽑기 횟수
     idx = 0  # plug 인덱스
@@ -141,7 +170,7 @@ def main():
                     if plug[j] == que[k]:
                         used[j] = (k, j)
                         break
-            used.sort() 
+            used.sort()
             # 다음 사용이 없으면 그냥 뽑아도 상관없음
             if used[0][0]:
                 # 다음 사용이 늦은 아이 교체
@@ -153,7 +182,7 @@ def main():
 
 if __name__ == "__main__":
     main()
-    
+
 ```
 
 ### [영준](/멀티탭%20스케줄링/영준.py)
@@ -220,7 +249,7 @@ def main():
             cnt += 1
             break
     print(cnt)
-    
+
     return
 
 
@@ -383,14 +412,14 @@ N, M = map(int, input().split())
 field = tuple(tuple(map(int, input().split())) for _ in range(N))
 
 def bfs():
-    que = deque([(0,0,field[0][0])])  
-    visited = [[[0,0] for _ in range(M)] for _ in range(N)]  
+    que = deque([(0,0,field[0][0])])
+    visited = [[[0,0] for _ in range(M)] for _ in range(N)]
     visited[0][0][field[0][0]] = 1
     while que:
         i, j, is_visit = que.popleft()
         if i == N-1 and j == M-1:
             return visited[i][j][is_visit]
-        
+
         for di, dj in [(1,0), (0,1), (-1,0), (0,-1)]:
             ni,nj = i+di, j+dj
             if 0 <= ni < N and 0 <= nj < M:
@@ -541,5 +570,9 @@ for _ in range(N):
 
 <details markdown="1">
 <summary>접기/펼치기</summary>
+
+## Belady's Min Algorithm
+
+### [페이지 교체 알고리즘](https://steady-coding.tistory.com/526)
 
 </details>
